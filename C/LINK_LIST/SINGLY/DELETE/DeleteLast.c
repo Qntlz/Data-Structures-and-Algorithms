@@ -14,7 +14,7 @@ List makeNode(int);
 void initList(List*);
 void populate(List*);
 void display(List);
-void delLastNode(List);
+void delLastNode(List*);
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
     display(head);
     printf("\n");
 
-    delLastNode(head);
+    delLastNode(&head);
     printf("After Deletion: ");        // Before Deleting a Node
     display(head);
 
@@ -58,9 +58,9 @@ void initList(List *head)
 void populate(List *head)
 {
     List last = NULL;
-    for (int i = 10; i <= 30; i+=10)
+    for (int i = 0; i < 3; i++)
     {
-        List newNode = makeNode(i);
+        List newNode = makeNode(i + 1);
         if(*head == NULL) {
             *head = newNode;
         }
@@ -78,13 +78,13 @@ void display(List head)
     }
 }
 
-void delLastNode(List head)
+void delLastNode(List *head)
 {
-    List trav = head, temp = NULL;
+    List *trav, temp = NULL;
     // Traverse the List as long as the node next to the current node doesn't point to NULL
-    for (;trav != NULL && trav->next->next != NULL; trav = trav->next){}    
+    for (trav = head; *trav != NULL && (*trav)->next != NULL; trav = &(*trav)->next){}    
     
-    temp = trav->next;      // Store the last node in a temporary variable
-    trav->next = NULL;      // Detach the last node from the list
+    temp = *trav;      // Store the last node in a temporary variable
+    *trav = NULL;      // Detach the last node from the list
     free(temp);             // Free the memory for the last node
 }
