@@ -6,7 +6,7 @@
 #define MAX 10
 
 typedef struct node {
-    char elem[10];
+    char elem[MAX];
     int count;                  // Stores the number of elements in the array
 } Node, *List;
 
@@ -35,19 +35,16 @@ int main()
 void initList(List *head)
 {
     // Initialize list to be empty
-    *head = NULL;
+    *head = malloc(sizeof(Node));
+
+    if(*head != NULL){
+        (*head)->count = 0;
+    }
 }
 
 void populate(List *head)
 {
-    *head = malloc(sizeof(Node));
-
-    if(*head == NULL){
-        printf("Memory Allocation Failed\n");
-    }
-
     char arr[] = {'a','b','c','d','e'};
-    (*head)->count = 0;
     for(int i = 0; i < 5; i++){
         (*head)->elem[(*head)->count++] = arr[i];
     }
