@@ -26,7 +26,7 @@ int main() {
     initQueue(&L);
 
     printf("Enqueue: \n\n");
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < MAX; i++) {
         enqueue(&L, i + 1);
     }
 
@@ -56,7 +56,7 @@ bool isEmpty(Queue L) {
 }
 
 bool isFull(Queue L) {
-    return (L->rear + 1) % MAX == L->front;
+    return ((L->rear + 1) % MAX == L->front);
 }
 
 void enqueue(Queue *L, int num) {
