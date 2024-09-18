@@ -20,7 +20,7 @@ typedef struct {
 
 void initStack(Stack*);                 // Initialize Stack
 void display(Stack);                    // Display Stack
-int empty(Stack);                       // Check if Stack is empty
+int isEmpty(Stack);                       // Check if Stack is empty
 void push(Stack*, int);                 // Add item to the Stack
 int pop(Stack*);                        // Remove item from the Stack
 void freeStack(Stack*);                 // Free all nodes in the Stack
@@ -43,7 +43,7 @@ int main()
 
     // Pop
     printf("\n\nDuring Pop:\n");
-    while (!empty(S)){
+    while (!isEmpty(S)){
         printf("\nPop: %d", pop(&S));
         display(S);
     }
@@ -64,7 +64,7 @@ void initStack(Stack *S)
     }
 }
 
-int empty(Stack S)
+int isEmpty(Stack S)
 {
     return (S->top == NULL);
 }
@@ -94,7 +94,7 @@ void push(Stack *S, int num)
 int pop(Stack *S)
 {
     // Check if Stack is EMPTY
-    if (empty(*S)){
+    if (isEmpty(*S)){
         return rogueVal;
     }
     else{

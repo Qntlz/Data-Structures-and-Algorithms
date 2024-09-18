@@ -13,8 +13,9 @@ typedef struct {
 void initStack(Stack*);
 void push(Stack, int);                      // ADD item to the Stack
 int pop(Stack);                             // REMOVE item from the Stack
-bool empty(Stack);                          // CHECKS if the stack is empty
-void top(Stack);                            // Displays the top
+bool isEmpty(Stack);                          // CHECKS if the stack is empty
+void peek(Stack);                            // Displays the top
+bool isFull(Stack);
 
 int main()
 {
@@ -33,7 +34,7 @@ int main()
     for (int i = 0; i <= S->top; i++){
         printf("%d ",S->arr[i]);
     }
-    top(S);
+    peek(S);
  
 
     // Pop
@@ -41,7 +42,7 @@ int main()
     for (int i = S->top; i >= 0; i--){
         printf("%d ",pop(S));
     }
-    top(S);
+    peek(S);
 
     // Free allocated memory
     free(S);
@@ -59,15 +60,20 @@ void initStack(Stack *S)
     }
 }
 
-bool empty(Stack S)
+bool isEmpty(Stack S)
 {
     return (S->top == -1);      // Return -1 if the stack is empty
+}
+
+bool isFull(Stack S)
+{
+    return (S->top == MAX - 1);
 }
 
 void push(Stack S, int n)
 {
     // Check if the stack is FULL
-    if(S->top != MAX - 1){
+    if(!isFull(S)){
         S->arr[++(S->top)] = n;
     } else {
         printf("Stack Overflow: Cannot push %d, stack is full.\n", n);
@@ -77,12 +83,12 @@ void push(Stack S, int n)
 int pop(Stack S)
 {
     // Check if the stack is not empty
-    if(empty(S)) {
+    if(isEmpty(S)) {
         return rogueVal;        // return a symbolic constant
     }
     return S->arr[(S->top)--];      // Returns the element at the same time decrements top
 }
 
-void top(Stack S){
-    printf("\nTop: %d\n",S->top);
+void peek(Stack S){
+    printf("\nTop: %d\n",S->arr[S->top]);       // Displays the top element
 }
