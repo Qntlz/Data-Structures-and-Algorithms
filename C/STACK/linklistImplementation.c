@@ -24,6 +24,7 @@ int isEmpty(Stack);                       // Check if Stack is empty
 void push(Stack*, int);                 // Add item to the Stack
 int pop(Stack*);                        // Remove item from the Stack
 void freeStack(Stack*);                 // Free all nodes in the Stack
+void peek(Stack);
 
 int main()
 {
@@ -40,6 +41,7 @@ int main()
     // Display Stack
     printf("After Push:\n");
     display(S);
+    peek(S);
 
     // Pop
     printf("\n\nDuring Pop:\n");
@@ -67,6 +69,16 @@ void initStack(Stack *S)
 int isEmpty(Stack S)
 {
     return (S->top == NULL);
+}
+
+void peek(Stack S)
+{
+    if(isEmpty(S)){
+        printf("\nEmpty List");
+    }
+    else{
+        printf("\nTop: %d\n",S->top->data);
+    }
 }
 
 void display(Stack S)

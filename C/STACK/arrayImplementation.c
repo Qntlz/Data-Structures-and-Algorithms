@@ -90,5 +90,10 @@ int pop(Stack S)
 }
 
 void peek(Stack S){
-    printf("\nTop: %d\n",S->arr[S->top]);       // Displays the top element
+    if(isEmpty(S)){
+        printf("\n%d",rogueVal);
+    }
+    else{
+        printf("\nTop: %d\n",S->arr[S->top]);       // Displays the top element
+    }
 }
