@@ -18,8 +18,8 @@ typedef struct
 } QueueType, *Queue;
 
 void initList(Queue *);
-void enqueue(Queue, int);
-void dequeue(Queue);
+void enqueue(Queue*, int);
+void dequeue(Queue*);
 bool empty(Queue);
 void display(Queue);
 
@@ -33,7 +33,7 @@ int main()
     // Enqueue
     printf("Enqueue: \n\n");
     for (int i = 0; i < 5; i++){
-        enqueue(L, i + 1);
+        enqueue(&L, i + 1);
         display(L);
     }
 
@@ -41,7 +41,7 @@ int main()
     printf("Dequeue: \n\n");
     do{
         display(L);
-        dequeue(L);
+        dequeue(&L);
     } while (!empty(L));
 
     if(empty(L)){
@@ -56,8 +56,7 @@ void initList(Queue *L)
     *L = malloc(sizeof(QueueType));
 
     if(*L != NULL){
-        (*L)->front = NULL;
-        (*L)->rear = NULL;
+        (*L)->front =(*L)->rear = NULL;
     }
 }
 
@@ -66,29 +65,29 @@ bool empty(Queue L)
     return L->front == NULL;
 }
 
-void enqueue(Queue L, int num){                // Insert
+void enqueue(Queue *L, int num){                // Insert
     List newNode = malloc(sizeof(Node));
     if (newNode != NULL){
         newNode->data = num;
         newNode->next = NULL;
     }
 
-    if (empty(L)){   // If the list is empty
-        L->front = newNode;
+    if (empty(*L)){   // If the list is empty
+        (*L)->front = newNode;
     }
     else{
-        L->rear->next = newNode;
+        (*L)->rear->next = newNode;
     }
-    L->rear = newNode;                          // Point rear to the new node
+    (*L)->rear = newNode;                          // Point rear to the new node
 }
-void dequeue(Queue L)
+void dequeue(Queue *L)
 { // Delete
-    if (!empty(L))
+    if (!empty(*L))
     {
-        List temp = L->front;
-        L->front = temp->next;
-        if (L->front == NULL){ // If list has one element
-            L->rear = NULL;
+        List temp = (*L)->front;
+        (*L)->front = temp->next;
+        if ((*L)->front == NULL){ // If list has one element
+            (*L)->rear = NULL;
         }
         free(temp);
     }
