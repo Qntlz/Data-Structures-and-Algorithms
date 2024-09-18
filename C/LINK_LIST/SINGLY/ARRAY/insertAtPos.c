@@ -32,7 +32,7 @@ int main()
     // Display Array Contents & Count
     printf("Current List: ");
     display(head);
-    printf("Count: %d\nTarget to Insert: %d\n",head->count,target);
+    printf("Count: %d\nTarget to Insert: %d\nPosition(Index): %d\n",head->count,target,pos);
 
     // Insert At Given Position
     insertAtPos(head,target,pos);
@@ -47,21 +47,16 @@ int main()
 void initList(List *head)
 {
     // Initialize list to be empty
-    *head = NULL;
+    *head = malloc(sizeof(Node));
+
+    if(*head != NULL){
+        (*head)->count = 0;
+    }
 }
 
 void populate(List *head)
 {
-    // Dynamically Allocate Memory
-    *head = malloc(sizeof(Node));
-
-    // Error Checking if Memory Allocation was successful
-    if(*head == NULL){
-        printf("Memory Allocation Failed\n");
-    }
-
     int dummy[] = {1,2,3};          // Dummy Values
-    (*head)->count = 0;
     for(int i = 0; i < 3; i++){
         (*head)->arr[(*head)->count++] = dummy[i];
     }

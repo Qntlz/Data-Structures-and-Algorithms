@@ -6,7 +6,7 @@
 #define MAX 10
 
 typedef struct node {
-    int arr[10];
+    int arr[MAX];
     int count;               // Stores the number of elements in the array
 } Node, *List;
 
@@ -33,7 +33,7 @@ int main()
 
     delFirstOccur(head,target);
 
-    printf("After Deleting All Occurences: ");
+    printf("After Deleting First Occurence: ");
     display(head);
     printf("Count: %d",head->count);
 
@@ -43,21 +43,16 @@ int main()
 void initList(List *head)
 {
     // Initialize list to be empty
-    *head = NULL;
+    *head = malloc(sizeof(Node));
+
+    if(*head != NULL){
+        (*head)->count = 0;
+    }
 }
 
 void populate(List *head)
 {
-    // Dynamically Allocate Memory
-    *head = malloc(sizeof(Node));
-
-    // Error Checking if Memory Allocation was successful
-    if(*head == NULL){
-        printf("Memory Allocation Failed\n");
-    }
-
     int temp = 1;       // Dummy element to store
-    (*head)->count = 0;
     for(int i = 0; i < 6; i++){
         (*head)->arr[(*head)->count++] = temp;
         if(i % 2 != 0){

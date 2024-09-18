@@ -6,7 +6,7 @@
 #define MAX 10
 
 typedef struct node {
-    int arr[10];
+    int arr[MAX];
     int lastIdx;            // Stores the index of the last element in the array
 } Node, *List;
 
@@ -43,21 +43,16 @@ int main()
 void initList(List *head)
 {
     // Initialize list to be empty
-    *head = NULL;
+    *head = malloc(sizeof(Node));
+
+    if(*head != NULL){
+        (*head)->lastIdx = -1;
+    }
 }
 
 void populate(List *head)
 {
-    // Dynamically Allocate Memory
-    *head = malloc(sizeof(Node));
-
-    // Error Checking if Memory Allocation was successful
-    if(*head == NULL){
-        printf("Memory Allocation Failed\n");
-    }
-
     int temp = 1;                   // Dummy element to store
-    (*head)->lastIdx = -1;          // Initialize last index to -1
     for(int i = 0; i < 6; i++){
         (*head)->arr[++(*head)->lastIdx] = temp;
         if(i % 2 != 0){
