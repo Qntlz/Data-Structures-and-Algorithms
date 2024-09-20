@@ -46,8 +46,7 @@ int main() {
 void initQueue(Queue *L) {
     *L = malloc(sizeof(Queuetype));
     if (*L != NULL) {
-        (*L)->front = -1;
-        (*L)->rear = -1;
+        (*L)->front = (*L)->rear = -1;
     }
 }
 
