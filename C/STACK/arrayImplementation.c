@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// Basic Array Implementation of Stack
+// Stack: "LAST In, FIRST Out"
+
 #define MAX 10
 #define rogueVal -999           // Sentinel Value
 
