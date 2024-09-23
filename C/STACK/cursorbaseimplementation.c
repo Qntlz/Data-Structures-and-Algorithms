@@ -17,43 +17,49 @@ typedef struct{
     int avail;
 }VirtualHeap;
 
-typedef int List;
+typedef struct{
+    int top;
+}Stacktype,*Stack;
 
-void initList(List*);
+void initStack(Stack*);
 void initVH(VirtualHeap*);
 int allocSpace(VirtualHeap*);
 void deAllocSpace(VirtualHeap*,int);
-bool isEmpty(List);
+bool isEmpty(Stack);
 bool isFull(VirtualHeap);
-void push(List*,VirtualHeap*,int);
-int pop(List *L,VirtualHeap *VH);
-int peek(List,VirtualHeap);
+void push(Stack*,VirtualHeap*,int);
+int pop(Stack *,VirtualHeap *VH);
+int peek(Stack,VirtualHeap);
 
 
 int main(){
 
-    List top;
+    Stack S;
     VirtualHeap myHeap;
 
-    initList(&top);
+    initStack(&S);
     initVH(&myHeap);
 
-    push(&top,&myHeap,1);
-    push(&top,&myHeap,2);
-    push(&top,&myHeap,3);
+    push(&S,&myHeap,1);
+    push(&S,&myHeap,2);
+    push(&S,&myHeap,3);
 
-    printf("Top: %d\n\n",peek(top,myHeap));
+    printf("Top: %d\n\n",peek(S,myHeap));
 
     for (int i = 0; i < 3; i++){
-        printf("Pop: %d\n",pop(&top,&myHeap));
-        printf("Top: %d\n\n",peek(top,myHeap));
+        printf("Pop: %d\n",pop(&S,&myHeap));
+        printf("Top: %d\n\n",peek(S,myHeap));
     }
 
     return 0;
 }
 
-void initList(List *top){
-    *top = -1;
+void initStack(Stack *S){
+    *S = malloc(sizeof(Stacktype));
+
+    if(*S != NULL){
+        (*S)->top = -1;
+    }
 }
 void initVH(VirtualHeap *VH){
     VH->avail = 0;
@@ -64,7 +70,7 @@ void initVH(VirtualHeap *VH){
     
 }
 int allocSpace(VirtualHeap *VH){
-    List space = VH->avail;
+    int space = VH->avail;
     if(space != -1){
         VH->avail = VH->Nodes[space].link;
     }
@@ -78,47 +84,47 @@ void deAllocSpace(VirtualHeap *VH,int index){
     }
 }
 
-bool isEmpty(List top){
-    return top == -1;
+bool isEmpty(Stack S){
+    return S->top == -1;
 }
 bool isFull(VirtualHeap VH){
     return VH.avail == -1;
 }
 
-void push(List *top,VirtualHeap *VH,int num){
+void push(Stack *S,VirtualHeap *VH,int num){
     // Check if full
     if(isFull(*VH)) printf("Stack is FULL\n");
     else{
-        List space = allocSpace(VH);
+        int space = allocSpace(VH);
         if(space != -1){
             VH->Nodes[space].data = num;          // Store the value
-            VH->Nodes[space].link = *top;         // Link the new element to the previous top
-            *top = space;                         // Update the top of the stack
+            VH->Nodes[space].link = (*S)->top;         // Link the new element to the previous top
+            (*S)->top = space;                         // Update the top of the stack
         }               
     }
 }
 
-int pop(List *top,VirtualHeap *VH){
+int pop(Stack *S,VirtualHeap *VH){
     // Check if empty
-    if(isEmpty(*top)) {
+    if(isEmpty(*S)) {
         printf("Stack is EMPTY\n");
+        return roqueVal;                              // Return Sentinel Value
     }
     else{
-        List temp = *top;                           // Store current top
-        List hold = VH->Nodes[temp].data;           // Store the value at top
-        *top = VH->Nodes[temp].link;                // Update top
+        int temp = (*S)->top;                           // Store current top
+        int hold = VH->Nodes[temp].data;           // Store the value at top
+        (*S)->top = VH->Nodes[temp].link;                // Update top
         deAllocSpace(VH,temp);
         return hold;
     }
-    return roqueVal;                              // Return Sentinel Value
 }
 
-int peek(List L, VirtualHeap VH) {
+int peek(Stack L, VirtualHeap VH) {
     if (isEmpty(L)) {
         printf("Stack is EMPTY\n");
         return roqueVal;
     } else {
-        return VH.Nodes[L].data;
+        return VH.Nodes[L->top].data;
     }
 }
 
