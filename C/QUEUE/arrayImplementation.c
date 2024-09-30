@@ -6,6 +6,7 @@
 // Queue: "FIRST in, FIRST Out"
 
 #define MAX 5
+#define rogueVal -999
 
 typedef struct {
     int front, rear;
@@ -14,10 +15,10 @@ typedef struct {
 
 void initQueue(Queue*);
 void enqueue(Queue*, int);
-void dequeue(Queue*);
+int dequeue(Queue*);
+void display(Queue*);   // Display function
 bool isEmpty(Queue);
 bool isFull(Queue);
-void display(Queue);
 
 int main() {
     Queue L;
@@ -25,23 +26,25 @@ int main() {
     // Initialize Queue
     initQueue(&L);
 
-    printf("Enqueue: \n\n");
+    // Enqueue
     for (int i = 0; i < MAX; i++) {
         enqueue(&L, i + 1);
     }
 
-    display(L);  // Pass the Queue, not the address of the pointer
+    // Display the Queue (mimic dequeue-enqueue)
+    printf("\nDisplay Queue:\n");
+    display(&L);
 
-    // Dequeue test
-    printf("Dequeue:\n\n");
-    display(L);
-    while (!isEmpty(L)) {  // Pass the Queue, not the address of the pointer
-        dequeue(&L);
-        display(L);
+    //Dequeue
+    printf("Dequeue:\n");
+    while (!isEmpty(L)){
+        printf("%d\n",dequeue(&L));
     }
+    
+    if(isEmpty(L)) printf("Queue is EMPTY");
 
     return 0;
-}   
+}
 
 void initQueue(Queue *L) {
     *L = malloc(sizeof(Queuetype));
@@ -73,31 +76,39 @@ void enqueue(Queue *L, int num) {
     }
 }
 
-void dequeue(Queue *L) {
+int dequeue(Queue *L) {
     if (isEmpty(*L)) {
         printf("Queue is EMPTY\n");
+        return rogueVal;
     } else {
+        int hold;
         // If only one element was in the queue, reset it
         if ((*L)->front == (*L)->rear) {
+            hold = (*L)->arr[(*L)->front];
             (*L)->front = (*L)->rear = -1;
         } else {
+            hold = (*L)->arr[(*L)->front];
             (*L)->front = ((*L)->front + 1) % MAX;
         }
+        return hold;
     }
 }
 
-void display(Queue L) {
-    if (isEmpty(L)) {
+void display(Queue *L) {
+    if (isEmpty(*L)) {
         printf("Queue is EMPTY\n");
-    } else {
-        printf("Queue: ");
-        int i = L->front;
-        while (i != L->rear) {
-            printf("%d ", L->arr[i]);
-            i = (i + 1) % MAX;
-        }
-        // Print the rear element
-        printf("%d ", L->arr[L->rear]);
-        printf("\nFront: %d Rear: %d\n\n", L->arr[L->front], L->arr[L->rear]);
+        return;
     }
+
+    int originalFront = (*L)->front;   // Mark the original front position
+    int currentPos = (*L)->front;      // Start from the front
+
+    do {
+        printf("%d\n", (*L)->arr[currentPos]);  // Print the current element
+
+        // Simulate dequeue by moving the front to the next position
+        currentPos = (currentPos + 1) % MAX;    // Circular increment of position
+
+        // Simulate enqueue by considering the currentPos element at the rear
+    } while (currentPos != originalFront);  // Stop once we cycle back to the original front
 }

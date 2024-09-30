@@ -146,7 +146,7 @@ void freeStack(Stack *S)
     // Traverse the stack and free each node
     while ((*S)->top != NULL){
         temp = (*S)->top;
-        (*S)->top = (*S)->top->next;
+        (*S)->top = temp->next;
         free(temp);                             // Free the current node
     }
     free(*S);                                   // Free the stack structure itself

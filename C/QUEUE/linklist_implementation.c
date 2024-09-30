@@ -5,6 +5,8 @@
 // Basic Linked List Implementation of Queue
 // Queue: "FIRST in, FIRST Out"
 
+#define rogueVal -999
+
 typedef struct node
 {
     int data;
@@ -19,9 +21,9 @@ typedef struct
 
 void initList(Queue *);
 void enqueue(Queue*, int);
-void dequeue(Queue*);
+int dequeue(Queue*);
 bool empty(Queue);
-void display(Queue);
+void display(Queue*);
 
 int main()
 {
@@ -31,23 +33,21 @@ int main()
     initList(&L);
 
     // Enqueue
-    printf("Enqueue: \n\n");
     for (int i = 0; i < 5; i++){
         enqueue(&L, i + 1);
-        display(L);
     }
 
-    // Dequeue
-    printf("Dequeue: \n\n");
-    do{
-        display(L);
-        dequeue(&L);
-    } while (!empty(L));
+    printf("Elements in Queue:\n");
+    display(&L);
 
-    if(empty(L)){
-        printf("Queue is Empty!");
+
+    printf("Dequeue: \n");
+    while (!empty(L)){
+        printf("%d\n",dequeue(&L));
     }
 
+    if(empty(L)) printf("Queue is EMPTY!\n");
+   
     return 0;
 }
 
@@ -80,27 +80,44 @@ void enqueue(Queue *L, int num){                // Insert
     }
     (*L)->rear = newNode;                          // Point rear to the new node
 }
-void dequeue(Queue *L)
+int dequeue(Queue *L)
 { // Delete
-    if (!empty(*L))
-    {
+    if (empty(*L)){
+        printf("Queue is EMPTY!\n");
+        return rogueVal;
+    }
+    else{
         List temp = (*L)->front;
+        int hold = temp->data;
         (*L)->front = temp->next;
         if ((*L)->front == NULL){ // If list has one element
             (*L)->rear = NULL;
         }
         free(temp);
+        return hold; 
     }
 }
 
-void display(Queue L)
-{
-    List trav;
-    printf("Queue: ");
-    for (trav = L->front; trav != NULL; trav = trav->next) {
-        printf("%d ", trav->data);
+void display(Queue *L) {
+    if (empty(*L)) {
+        printf("Queue is empty.\n");
+        return;
     }
-    printf("\nFront: %d Rear: %d\n\n", L->front->data, L->rear->data);
+
+    List mark = (*L)->front;  // Mark the original front
+    do {
+        // Simulate dequeue by moving the front pointer but don't free the memory
+        int hold = (*L)->front->data;
+        printf("%d\n", hold);
+
+        // Move the front to the next node (simulating dequeue)
+        (*L)->rear->next = (*L)->front;  // Connect the front to the rear
+        (*L)->front = (*L)->front->next; // Update the front to the next element
+        (*L)->rear = (*L)->rear->next;   // Move the rear to point to the old front
+        (*L)->rear->next = NULL;         // Ensure the new rear's next is NULL
+
+    } while ((*L)->front != mark); // Stop once we reach the original front
 }
+
 
 
