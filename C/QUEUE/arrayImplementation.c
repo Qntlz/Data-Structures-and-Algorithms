@@ -58,7 +58,7 @@ bool isEmpty(Queue L) {
 }
 
 bool isFull(Queue L) {
-    return ((L->rear + 1) % MAX == L->front);
+    return ((L->rear + 2) % MAX == L->front);
 }
 
 void enqueue(Queue *L, int num) {
