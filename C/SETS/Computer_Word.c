@@ -14,6 +14,7 @@
     BitVector getUnion(BitVector,BitVector);
     BitVector getIntersection(BitVector,BitVector);
     BitVector getDifference(BitVector,BitVector);
+    int count(BitVector);
 
 
     int main(){
@@ -98,6 +99,8 @@
             2^1 + 2^2 = 6
         */
 
+       printf("%d",count(S1));
+
         return 0;
     }
 
@@ -124,6 +127,10 @@
     }
 
     BitVector getDifference(BitVector SetA,BitVector SetB){
-        return (SetA &~ SetB);
+        return (SetA &~ SetB); 
+    }
+
+    int count(BitVector S1){
+        return __builtin_popcount(S1);
     }
 
