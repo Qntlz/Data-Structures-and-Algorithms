@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 // Cursor-Base Implementation of Queue
-// Stack: "FIRST In, FIRST Out"
+// Queue: "FIRST In, FIRST Out"
 
 #define MAX 3
 #define roqueVal -999
@@ -112,7 +112,7 @@ void enqueue(Queue *Q, VirtualHeap *VH, int elem){
             VH->Nodes[space].data = elem;
             VH->Nodes[space].link = -1;                 // New rear has no next element
             if (isEmpty(*Q)){
-                (*Q)->front = space;                    // Set front to space for first element
+                (*Q)->front = space;                    // Set space to front for first element
             } else {
                 VH->Nodes[(*Q)->rear].link = space;     // Link the old rear to new rear
             }

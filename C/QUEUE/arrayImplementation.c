@@ -81,13 +81,11 @@ int dequeue(Queue *L) {
         printf("Queue is EMPTY\n");
         return rogueVal;
     } else {
-        int hold;
+        int hold = (*L)->arr[(*L)->front];;
         // If only one element was in the queue, reset it
         if ((*L)->front == (*L)->rear) {
-            hold = (*L)->arr[(*L)->front];
             (*L)->front = (*L)->rear = -1;
         } else {
-            hold = (*L)->arr[(*L)->front];
             (*L)->front = ((*L)->front + 1) % MAX;
         }
         return hold;
