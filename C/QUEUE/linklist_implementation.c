@@ -51,12 +51,12 @@ int main()
     return 0;
 }
 
-void initList(Queue *L)
+void initQueue(Queue *L)
 {
     *L = malloc(sizeof(QueueType));
 
     if(*L != NULL){
-        (*L)->front =(*L)->rear = NULL;
+        (*L)->front = (*L)->rear = NULL;
     }
 }
 
