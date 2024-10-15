@@ -34,12 +34,18 @@ int main()
     insert(A, 1);
     insert(A, 2);
     insert(A, 3);
+    insert(A, 4);
 
     insert(B, 2);
     insert(B, 3);
     insert(B, 5);
 
     printf("Current Set A: ");
+    display(A);
+
+    delete(A,4);
+
+    printf("Current Set A (After Deletion): ");
     display(A);
 
     printf("Current Set B: ");
@@ -113,6 +119,7 @@ void delete(SET S, int elem){
                 S->elements[j] = S->elements[j + 1];
             }
             S->size--;
+            break;
         }
     }
 }
